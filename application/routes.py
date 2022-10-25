@@ -1,5 +1,4 @@
 # This is where your CREATE, READ, UPDATE AND DELETE functionality is going to go.
-from asyncio import Task
 from flask import render_template, url_for, redirect, request
 from application import app, db
 from application.models import Products, Customer
@@ -9,9 +8,9 @@ from application.forms import ProductsForm, CustomerForm
 #Location of this functionality: ip_address:4000/
 @app.route('/', methods=['POST', 'GET'])
 def index():
-    customers = Customers.query.all()
+    customer = Customer.query.all()
     products = Productss.query.all()
-    return render_template('index.html', title="Customer Order", customers=customers, products=products)
+    return render_template('index.html', title="Customer Order", customer=customer, products=products)
 
 # CREATE customers
 @app.route('/addcustomer', methods=['POST', 'GET'])
@@ -58,11 +57,11 @@ def updatecustomer(customer_id):
     Customer = Customer.query.get(customer_id)
 
     if form.validate_on_submit():
-        customer.name = form.name.data
+        customer_id.name = form.name.data
         db.session.commit()
         return redirect(url_for('index'))
     elif request.method == 'GET':
-        form.name.data = customer.name
+        form.name.data = customer_id.name
     return render_template('updatecustomer.html', title='Update Customer Details', form=form)
 
 
@@ -85,8 +84,8 @@ def updateproduct(product_id):
     # Else if the request method is a GET
     elif request.method == 'GET':
         # Update the form with whats in the database
-        form.products.data = products.products
-        form.fk_customer_id.data = products.fk_customer_id
+        form.products.data = product_id.products
+        form.fk_customer_id.data = product_id.fk_customer_id
     # If we go to the url return the template updatecustomer.html
     return render_template('updateproduct.html', title='Update Product', form=form)
 
@@ -99,7 +98,7 @@ def deletecustomer(customer_id):
     db.session.commit()
     return redirect(url_for('index'))
 
-#DELETE products
+#DELETE product
 #Location of this functionality: ip_address:4000/delete/1
 @app.route('/delete/<int:product_id>')
 def deleteproduct(product_id):
