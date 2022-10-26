@@ -1,7 +1,7 @@
 {% block body_content %}
     <form action="" method="POST">
         {{ form.hidden_tag() }}
-        <p> Full Name: {{ form.first_name }} {{ form.second_name }} </p>
+        <p> Full Name: {{ form.customer_name }} </p>
         <p> Email: {{ form.email }}</p>
         {{ form.submit }}
     </form>

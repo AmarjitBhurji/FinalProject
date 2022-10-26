@@ -1,5 +1,4 @@
 # This is where your CREATE, READ, UPDATE AND DELETE functionality is going to go.
-from asyncio import Task
 from flask import render_template, url_for, redirect, request
 from application import app, db
 from application.models import Products, Customer
@@ -9,9 +8,9 @@ from application.forms import ProductsForm, CustomerForm
 #Location of this functionality: ip_address:4000/
 @app.route('/', methods=['POST', 'GET'])
 def index():
-    customers = Customers.query.all()
-    products = Productss.query.all()
-    return render_template('index.html', title="Customer Order", customers=customers, products=products)
+    customer = Customer.query.all()
+    products = Products.query.all()
+    return render_template('index.html', title="Customer Order", customer=customer, products=products)
 
 # CREATE customers
 @app.route('/addcustomer', methods=['POST', 'GET'])
@@ -19,7 +18,7 @@ def customeradd():
     form = CustomerForm()
     if form.validate_on_submit():
         customer = Customer(
-            name = form.name.data
+            customer_name = form.customer_name.data
         )
         db.session.add(customer)
         db.session.commit()
@@ -37,7 +36,7 @@ def add():
         # the variable tasks becomes what is put on the form
         # todos becomes what we are going to be adding to the database
         products = Products(
-            name = form.name.data,
+            product_name = form.product_name.data,
             # Foreign key as an option to add to the create process.
             fk_customer_id = form.fk_customer_id.data
         )
@@ -51,18 +50,18 @@ def add():
     return render_template('addproduct.html', title="Add Product", form=form)
 
 #UPDATE customer
-@app.route('/updatecustomer/<int:customer_id>', methods=['GET', 'POST'])
+@app.route('/updatecustomer/<int:first_name>', methods=['GET', 'POST'])
 def updatecustomer(customer_id):
     form = CustomerForm()
 
     Customer = Customer.query.get(customer_id)
 
     if form.validate_on_submit():
-        customer.name = form.name.data
+        customer_id.name = form.name.data
         db.session.commit()
         return redirect(url_for('index'))
     elif request.method == 'GET':
-        form.name.data = customer.name
+        form.name.data = customer_id.name
     return render_template('updatecustomer.html', title='Update Customer Details', form=form)
 
 
@@ -71,7 +70,7 @@ def updatecustomer(customer_id):
 def updateproduct(product_id):
     form = ProductsForm()
     # Get one tasks from the specified ID
-    customer = Products.query.get(product_id)
+    products = Products.query.get(product_id)
     # POST method
     # If the user clicks submit
     if form.validate_on_submit():
@@ -104,7 +103,7 @@ def deletecustomer(customer_id):
 @app.route('/delete/<int:product_id>')
 def deleteproduct(product_id):
     # Collecting the task we want to delete based on its id
-    products = Products.query.get(tid)
+    products = Products.query.get(product_id)
     # deleting this item from the database
     db.session.delete(products)
     # committing this change

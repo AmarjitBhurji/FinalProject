@@ -2,18 +2,20 @@
 
 <h1> This is a customer order! </h1>
 
-{% for Customer in Customer %}
-<p> {{ customer.customer_id }}</p>
-<p> {{ customer.first_name }} {{ customer.second_name }} </p>
-<p>{{ customer.email }}</p>
+{% for customer in customer %}
 
-{% for Product in Products %}
+<p> {{ customer.customer_id }}</p>
+<p> {{ customer.customer_name }} </p>
+<p> {{ customer.email }} </p>
+
+{% endfor %}
+
+{% for product in products %}
+
 <p> {{ product.product_id }}</p>
 <p> {{ product.name }} </p>
-<p>{{ product.price }}</p>
-<p>{{ product.amount }}</p>
-<p>{{ product.total }}</p>
-
+<p> {{ product.price }} </p>
+<p> {{ product.fk_customer_id }} </p>
 
 {% endfor %}
 
