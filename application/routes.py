@@ -27,7 +27,7 @@ def customeradd():
     return render_template('addcustomer.html', title="Enter Customer Details", form=form)
 
 #CREATE products
-#Location of this functionality: ip_address:5000/add
+#Location of this functionality: ip_address:4000/add
 @app.route('/addproduct', methods=['POST','GET'])
 def add():
     # This points to TodoForm
@@ -37,8 +37,8 @@ def add():
         # the variable tasks becomes what is put on the form
         # todos becomes what we are going to be adding to the database
         products = Products(
-            products = form.products.data,
-            # Foreign key as a option to add to the create process.
+            name = form.name.data,
+            # Foreign key as an option to add to the create process.
             fk_customer_id = form.fk_customer_id.data
         )
         # This performs the add to database
@@ -47,7 +47,7 @@ def add():
         db.session.commit()
         # This one redirects to the index functions url
         return redirect(url_for('index'))
-    # Otherwise return the template of addcustomer.html
+    # Otherwise return the template of addproduct.html
     return render_template('addproduct.html', title="Add Product", form=form)
 
 #UPDATE customer

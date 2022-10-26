@@ -5,7 +5,7 @@ from wtforms import StringField, SubmitField, SelectField, IntegerField
 
 class CustomerForm(FlaskForm):
     first_name = StringField("Task")
-    second_name = IntegerField("Lists ID")
+    second_name = StringField("Lists ID")
     email = StringField("Email")
     submit = SubmitField("Submit")
 
@@ -14,4 +14,5 @@ class ProductsForm(FlaskForm):
     price = IntegerField("Price")
     amount = IntegerField("Amount")
     total = IntegerField("Total")
+    fk_customer_id = IntegerField("Customer ID")
     submit = SubmitField("Submit")
