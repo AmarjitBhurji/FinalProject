@@ -18,7 +18,8 @@ def customeradd():
     form = CustomerForm()
     if form.validate_on_submit():
         customer = Customer(
-            customer_name = form.customer_name.data
+            customer_name = form.customer_name.data,
+            email = form.email.data
         )
         db.session.add(customer)
         db.session.commit()
@@ -92,6 +93,7 @@ def updateproduct(product_id):
         form.fk_customer_id.data = product_id.fk_customer_id
     # If we go to the url return the template updatecustomer.html
     return render_template('updateproduct.html', title='Update Product', form=form)
+
 
 #DELETE customer
 @app.route('/deletecustomer/<int:customer_id>')
