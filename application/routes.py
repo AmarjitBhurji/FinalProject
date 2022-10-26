@@ -9,7 +9,7 @@ from application.forms import ProductsForm, CustomerForm
 @app.route('/', methods=['POST', 'GET'])
 def index():
     customer = Customer.query.all()
-    products = Productss.query.all()
+    products = Products.query.all()
     return render_template('index.html', title="Customer Order", customer=customer, products=products)
 
 # CREATE customers
