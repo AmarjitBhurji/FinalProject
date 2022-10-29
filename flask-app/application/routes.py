@@ -18,26 +18,27 @@ def customeradd():
     form = CustomerForm()
     if form.validate_on_submit():
         customer = Customer(
-            name = form.name.data
+            customer_name = form.customer_name.data,
+            email = form.email.data
         )
         db.session.add(customer)
         db.session.commit()
         return redirect(url_for('index'))
     return render_template('addcustomer.html', title="Enter Customer Details", form=form)
 
-#CREATE products
-#Location of this functionality: ip_address:5000/add
+#CREATE product
 @app.route('/addproduct', methods=['POST','GET'])
 def add():
-    # This points to TodoForm
+    # This points to ProductsForm
     form = ProductsForm()
     # Checks that we have clicked the submit button
     if form.validate_on_submit():
         # the variable tasks becomes what is put on the form
         # todos becomes what we are going to be adding to the database
         products = Products(
-            products = form.products.data,
-            # Foreign key as a option to add to the create process.
+            product_name = form.product_name.data,
+            price = form.price.data,
+            # Foreign key as an option to add to the create process.
             fk_customer_id = form.fk_customer_id.data
         )
         # This performs the add to database
@@ -46,7 +47,7 @@ def add():
         db.session.commit()
         # This one redirects to the index functions url
         return redirect(url_for('index'))
-    # Otherwise return the template of addcustomer.html
+    # Otherwise return the template of addproduct.html
     return render_template('addproduct.html', title="Add Product", form=form)
 
 #UPDATE customer
@@ -54,29 +55,32 @@ def add():
 def updatecustomer(customer_id):
     form = CustomerForm()
 
-    Customer = Customer.query.get(customer_id)
+    customer_id = Customer.query.get(customer_id)
 
     if form.validate_on_submit():
-        customer_id.name = form.name.data
+        customer_id.customer_name = form.customer_name.data
+        customer_id.email = form.email.data
         db.session.commit()
         return redirect(url_for('index'))
     elif request.method == 'GET':
-        form.name.data = customer_id.name
+        form.customer_name.data = customer_id.customer_name
     return render_template('updatecustomer.html', title='Update Customer Details', form=form)
-
 
 #UPDATE products
 @app.route('/updateproduct/<int:product_id>', methods=['GET', 'POST'])
 def updateproduct(product_id):
     form = ProductsForm()
+
     # Get one tasks from the specified ID
-    customer = Products.query.get(product_id)
+    product_id = Products.query.get(product_id)
+
     # POST method
     # If the user clicks submit
     if form.validate_on_submit():
         # What is put in the form gets ammended to the database
-        product_id.products = form.products.data
-        customer.fk_customer_id = form.fk_customer_id.data
+        product_id.product_name = form.product_name.data
+        product_id.price = form.price.data
+        product_id.fk_customer_id = form.fk_customer_id.data
         # Commit the changes
         db.session.commit()
         # Redirect to the url for index function
@@ -84,7 +88,8 @@ def updateproduct(product_id):
     # Else if the request method is a GET
     elif request.method == 'GET':
         # Update the form with whats in the database
-        form.products.data = product_id.products
+        form.product_name.data = product_id.product_name
+        form.price.data = product_id.price
         form.fk_customer_id.data = product_id.fk_customer_id
     # If we go to the url return the template updatecustomer.html
     return render_template('updateproduct.html', title='Update Product', form=form)
@@ -94,16 +99,16 @@ def updateproduct(product_id):
 @app.route('/deletecustomer/<int:customer_id>')
 def deletecustomer(customer_id):
     customer = Customer.query.get(customer_id)
-    db.session.delete(Customer)
+    db.session.delete(customer)
     db.session.commit()
     return redirect(url_for('index'))
 
-#DELETE product
+#DELETE products
 #Location of this functionality: ip_address:4000/delete/1
-@app.route('/delete/<int:product_id>')
+@app.route('/deleteproduct/<int:product_id>')
 def deleteproduct(product_id):
     # Collecting the task we want to delete based on its id
-    products = Products.query.get(tid)
+    products = Products.query.get(product_id)
     # deleting this item from the database
     db.session.delete(products)
     # committing this change
