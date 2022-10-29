@@ -1,9 +1,11 @@
 {% block body_content %}
 
+<h1> Edit Customer Details </h1>
+<br>
+
 <form action="" method="POST">
     {{ form.hidden_tag() }}
-    <p> ID: {{ form.customer_id }} </p>
-    <p> Full Name: {{ form.first_name }} {{ form.second_name }} </p>
+    <p> Full Name: {{ form.customer_name }} </p>
     <p> Email: {{ form.email }}</p>
     {{ form.submit }}
 </form>

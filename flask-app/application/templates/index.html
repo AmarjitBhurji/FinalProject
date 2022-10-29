@@ -1,0 +1,31 @@
+{% block body_content %}
+
+<h1> This is a Customer Order! </h1>
+<br>
+
+{% for customer in customer %}
+
+<h3> Customer Details </h3>
+<br>
+
+<p> Customer ID: {{ customer.customer_id }} </p>
+<p> Name: {{ customer.customer_name }} </p>
+<p> Email: {{ customer.email }} </p>
+<br>
+
+{% endfor %}
+
+{% for product in products %}
+
+<h3> Product Details </h3>
+<br>
+
+<p> Product ID: {{ product.product_id }}</p>
+<p> Name: {{ product.product_name }} </p>
+<p> Price: £{{ product.price }} </p>
+<p> Customer ID: {{ product.fk_customer_id }} </p>
+<br>
+
+{% endfor %}
+
+{% endblock body_content %}

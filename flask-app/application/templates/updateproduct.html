@@ -1,0 +1,14 @@
+{% block body_content %}
+
+<h1> Edit Product Details </h1>
+<br>
+
+<form action="" method="POST">
+    {{ form.hidden_tag() }}
+    <p> Product Name: {{ form.product_name }} </p>
+    <p> Price: £{{ form.price }}</p>
+    <p> Customer ID: {{ form.fk_customer_id }} </p>
+    {{ form.submit }}
+</form>
+
+{% endblock body_content %}
