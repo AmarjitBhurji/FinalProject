@@ -5,18 +5,17 @@
 {% for Customer in Customer %}
 
 <p> id: {{ customer.customer_id }} </p>
-<p> name: {{ customer.first_name }} {{ customer.second_name }} </p>
+<p> name: {{ customer.customer_name }} </p>
 <p> email: {{ customer.email }} </p>
 
 {% endfor %}
 
 {% for Product in Products %}
 
-<p> {{ product.product_id }}</p>
-<p> {{ product.name }} </p>
-<p>{{ product.price }}</p>
-<p>{{ product.amount }}</p>
-<p>{{ product.total }}</p>
+<p> id: {{ product.product_id }}</p>
+<p> name: {{ product.product_ name }} </p>
+<p> price: {{ product.price }} </p>
+<p> customer id: {{ product.fk_customer_id }} </p>
 
 {% endfor %}
 
