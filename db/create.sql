@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS Customer (
         customer_id INT PRIMARY KEY AUTO_INCREMENT,
-        customer_name VARCHAR(50)
+        customer_name VARCHAR(50),
         email VARCHAR(50)
 );
 
